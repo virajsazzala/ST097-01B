@@ -9,13 +9,22 @@ class Datahandler:
     A class to extract required data from the KITTI Dataset.
     """
 
-    def __init__(self, sequence):
-        # track the sequence
-        self.sequence = sequence
-
+    def __init__(self, sample=True, sequence='00'):
+        """
+        optional args:
+            sequence - sequence directory number from KITTI Ds.
+            sample - uses the sample dataset
+        """
         # dirs for poses and ground truths
-        self.seq_dir = f"./dataset/sequences/{self.sequence}/"
-        self.poses_dir = f"./dataset/poses/{self.sequence}.txt"
+        if sample:
+            self.seq_dir = f"./data/sequences/"
+            self.poses_dir = f"./data/poses/poses.txt"
+        else:
+            # track sequence
+            self.sequence = sequence
+            self.seq_dir = f"./dataset/sequences/{self.sequence}/"
+            self.poses_dir = f"./dataset/poses/{self.sequence}.txt"
+
         poses = pd.read_csv(self.poses_dir, delimiter=" ", header=None)
 
         self.limgs = os.listdir(self.seq_dir + "image_0")

@@ -18,6 +18,7 @@ def extract_features(img, mask=None):
 
     return keypoints, descriptors
 
+
 def match_features(d1, d2, filter=True, threshold=0.5, k=2):
     """
     Match features from images.

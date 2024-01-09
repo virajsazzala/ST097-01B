@@ -7,22 +7,15 @@ import matplotlib.pyplot as plt
 from src.datahandler import Datahandler
 from src.depthsense import extract_depth
 from src.location import find_displacement
+from src.plotting import show_computed_path
 from src.featuredetection import extract_features, match_features
 
-from src.helpers import display_plot
-
-handler = Datahandler("05", sample=False)
+# process dataset
+handler = Datahandler(sample=True)
 frame_count = handler.frame_count
 
-# computed plot
-fig = plt.figure(figsize=(10, 10))
-ax = fig.add_subplot(projection="3d")
-ax.view_init(elev=-20, azim=270)
-xs = handler.gt[:, 0, 3]
-ys = handler.gt[:, 1, 3]
-zs = handler.gt[:, 2, 3]
-ax.set_box_aspect((np.ptp(xs), np.ptp(ys), np.ptp(zs)))
-ax.plot(xs, ys, zs, c="grey")
+# computed path
+show_computed_path(plt, handler)
 
 # create homogenous transformation matrix
 T_tot = np.eye(4)
@@ -39,19 +32,19 @@ kl, rl, tl, _, _, _, _ = cv2.decomposeProjectionMatrix(handler.P0)
 tl = (tl / tl[3])[:3]
 
 # video
-impath = f"./dataset/sequences/{handler.sequence}/image_0"
+impath = handler.seq_dir + "image_0/"
 cv2.namedWindow("drive", cv2.WINDOW_NORMAL)
 
+start_time = datetime.now()
 for i in range(frame_count - 1):
-    start_time = datetime.now()
-
+    
     left_img = next_img
     next_img = next(handler.imgs_left)
     right_img = next(handler.imgs_right)
 
-    imp = os.path.join(impath, handler.limgs[i])
-    fr = cv2.imread(imp)
-    cv2.imshow("drive", fr)
+    # imp = os.path.join(impath, np.array(left_img))
+    # fr = cv2.imread(left_img)
+    cv2.imshow("drive", left_img)
     if cv2.waitKey(100) & 0xFF == ord("q"):
         break
 
@@ -78,16 +71,15 @@ for i in range(frame_count - 1):
     T_tot = T_tot.dot(np.linalg.inv(tmat))
     trajectory[i + 1, :, :] = T_tot[:3, :]
 
-    end_time = datetime.now()
-
-    print("Time to compute frame {}:".format(i + 1), end_time - start_time)
-
     # plotting
     xs = trajectory[: i + 2, 0, 3]
     ys = trajectory[: i + 2, 1, 3]
     zs = trajectory[: i + 2, 2, 3]
     plt.plot(xs, ys, zs, c="green")
     plt.pause(1e-32)
+
+end_time = datetime.now()
+print("Time to process {}:".format(i + 1), end_time - start_time)
 
 plt.close()
 cv2.destroyAllWindows()
