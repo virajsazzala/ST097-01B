@@ -1,6 +1,6 @@
 # ST097-01B
 
-Visual Odometry with Stereo cameras for Autonomous Vehicles
+Visual Odometry implementation with Stereo cameras for localization in Autonomous Driving
 
 ## Overview
 - It uses Python and OpenCV.
