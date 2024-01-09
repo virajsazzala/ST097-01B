@@ -11,7 +11,7 @@ from src.plotting import show_computed_path
 from src.featuredetection import extract_features, match_features
 
 # process dataset
-handler = Datahandler(sample=True)
+handler = Datahandler(sequence='01')
 frame_count = handler.frame_count
 
 # computed path

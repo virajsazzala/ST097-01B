@@ -10,9 +10,9 @@ Visual Odometry with Stereo cameras for Autonomous Vehicles
 
 1. **Download the Dataset:**
 
-   - Obtain a portion of the KITTI Dataset from the provided `data.zip` file.
-   - Extract the contents of the `data.zip` file to the root directory of your project. Alternatively, you can download the full dataset from [KITTI's official website](https://www.cvlibs.net/datasets/kitti/eval_odometry.php).
+   - Download the full dataset from [KITTI's official website](https://www.cvlibs.net/datasets/kitti/eval_odometry.php).
    - Make sure to download the greyscale images and the ground truth poses dataset.
+   - Extract it to the root directory of the project.
 
 2. **Setup Virtual Environment:**
 
