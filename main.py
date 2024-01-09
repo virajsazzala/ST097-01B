@@ -18,9 +18,9 @@ frame_count = handler.frame_count
 show_computed_path(plt, handler)
 
 # create homogenous transformation matrix
-T_tot = np.eye(4)
+tot = np.eye(4)
 trajectory = np.zeros((frame_count, 3, 4))
-trajectory[0] = T_tot[:3, :]
+trajectory[0] = tot[:3, :]
 imheight = handler.img_height
 imwidth = handler.img_width
 
@@ -42,8 +42,7 @@ for i in range(frame_count - 1):
     next_img = next(handler.imgs_left)
     right_img = next(handler.imgs_right)
 
-    # imp = os.path.join(impath, np.array(left_img))
-    # fr = cv2.imread(left_img)
+    # show frame
     cv2.imshow("drive", left_img)
     if cv2.waitKey(100) & 0xFF == ord("q"):
         break
@@ -68,8 +67,8 @@ for i in range(frame_count - 1):
     tmat = np.eye(4)
     tmat[:3, :3] = r
     tmat[:3, 3] = t.T
-    T_tot = T_tot.dot(np.linalg.inv(tmat))
-    trajectory[i + 1, :, :] = T_tot[:3, :]
+    tot = tot.dot(np.linalg.inv(tmat))
+    trajectory[i + 1, :, :] = tot[:3, :]
 
     # plotting
     xs = trajectory[: i + 2, 0, 3]
