@@ -12,8 +12,7 @@ class Datahandler:
     def __init__(self, sequence='00'):
         """
         optional args:
-            sequence - sequence directory number from KITTI Ds.
-            sample - uses the sample dataset
+            sequence - sequence directory number from KITTI Dataset.
         """
         # track sequence
         self.sequence = sequence
