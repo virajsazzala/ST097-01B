@@ -10,11 +10,9 @@ from src.location import find_displacement
 from src.plotting import show_computed_path
 from src.featuredetection import extract_features, match_features
 
-# process dataset
 handler = Datahandler(sequence='01')
 frame_count = handler.frame_count
 
-# computed path
 show_computed_path(plt, handler)
 
 # create homogenous transformation matrix
@@ -42,12 +40,10 @@ for i in range(frame_count - 1):
     next_img = next(handler.imgs_left)
     right_img = next(handler.imgs_right)
 
-    # show frame
     cv2.imshow("drive", left_img)
     if cv2.waitKey(100) & 0xFF == ord("q"):
         break
 
-    # get depth map
     depth = extract_depth(left_img, right_img, handler.P0, handler.P1)
 
     # masking non-overlapping zone
@@ -56,7 +52,6 @@ for i in range(frame_count - 1):
     xmax = depth.shape[1]
     cv2.rectangle(mask, (96, 0), (xmax, ymax), (255), thickness=-1)
 
-    # get features from img
     kp0, des0 = extract_features(left_img, mask)
     kp1, des1 = extract_features(next_img, mask)
     matches = match_features(des0, des1, filter=True)
@@ -78,7 +73,7 @@ for i in range(frame_count - 1):
     plt.pause(1e-32)
 
 end_time = datetime.now()
-print("Time to process {}:".format(i + 1), end_time - start_time)
+print(f"Processing Time {i + 1}: {end_time - start_time}")
 
 plt.close()
 cv2.destroyAllWindows()
