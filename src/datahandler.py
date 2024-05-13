@@ -19,7 +19,7 @@ class Datahandler:
 
         # dirs for poses and ground truths
         self.seq_dir = f"./dataset/sequences/{self.sequence}/"
-        self.poses_dir = f"./dataset/poses/{self.sequence}.txt"
+        self.poses_dir = f"./data_odometry_poses/dataset/poses/{self.sequence}.txt"
 
         poses = pd.read_csv(self.poses_dir, delimiter=" ", header=None)
 

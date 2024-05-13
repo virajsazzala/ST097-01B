@@ -1,4 +1,6 @@
 dataset/
 __pycache__/
 venv/
-data/
+dataset/
+.env/
+data_odometry_poses/
