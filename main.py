@@ -10,7 +10,7 @@ from src.location import find_displacement
 from src.plotting import show_computed_path
 from src.featuredetection import extract_features, match_features
 
-handler = Datahandler(sequence='01')
+handler = Datahandler(sequence='02')
 frame_count = handler.frame_count
 
 show_computed_path(plt, handler)
